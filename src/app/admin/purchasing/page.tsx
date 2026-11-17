@@ -23,7 +23,7 @@ export default async function PurchasingPage() {
   return (
     <div className="space-y-6">
       <PageHeader title="Wekelijks inkooprapport" description="Alle bevestigde pre-order eenheden waarvan de aanbetaling is geverifieerd en die nog niet in een actieve inkoopbatch zitten. Gegroepeerd per leverancier, product, SKU, maat en kleur."
-        actions={<Button asChild variant="outline" size="sm"><a href="/api/admin/export/purchasing">CSV exporteren</a></Button>} />
+        actions={<Button asChild variant="outline" size="sm"><a href={"/api/admin/export/purchasing"}>CSV exporteren</a></Button>} />
       {error && <Alert variant="error">{error.message}</Alert>}
       {rows.length === 0 && <p className="rounded-lg border border-dashed bg-white p-10 text-center text-sm text-taupe">Geen openstaande pre-order eenheden om in te kopen.</p>}
       {[...groups.entries()].map(([sid, list]) => {

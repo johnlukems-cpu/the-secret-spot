@@ -134,3 +134,24 @@ begin
   perform public.require_permission('purchasing.manage');
   return public.next_document_number('PO');
 end $$;
+
+-- Minimal staff directory (names + roles) for assignment dropdowns
+create or replace function public.staff_directory()
+returns table (user_id uuid, full_name text, email text, roles public.app_role[])
+language plpgsql stable security definer set search_path = public as $$
+#variable_conflict use_column
+begin
+  if not public.is_staff() and not public.is_trusted_caller() then
+    raise exception 'permission denied: staff only' using errcode = '42501';
+  end if;
+  return query
+    select ur.user_id, p.full_name, p.email, array_agg(ur.role order by ur.role)
+      from public.user_roles ur left join public.profiles p on p.id = ur.user_id
+     where ur.role <> 'customer'
+     group by ur.user_id, p.full_name, p.email;
+end $$;
+
+-- Delivery staff may read the payments they collected (for receipts)
+create policy payments_delivery_select on public.payments for select
+  using (public.has_permission('deliveries.view')
+         and exists (select 1 from public.delivery_payments dp where dp.payment_id = id));

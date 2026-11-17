@@ -7,6 +7,8 @@ import { getCategoryTree, getPublicSettings, getSiteContent } from "@/lib/data/c
 import { getSession } from "@/lib/auth";
 import { isSupabaseConfigured } from "@/lib/env";
 
+export const dynamic = "force-dynamic";
+
 export default async function StoreLayout({ children }: { children: React.ReactNode }) {
   const [categories, settings, content, session] = await Promise.all([getCategoryTree(), getPublicSettings(), getSiteContent(), getSession()]);
   const a = content.find((b) => b.block_type === "announcement");
