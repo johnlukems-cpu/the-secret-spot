@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="THE SECRET SPOT">
+  <rect width="520" height="120" fill="#171A18"/>
+  <g transform="translate(24 20)">
+    <circle cx="40" cy="40" r="38" fill="none" stroke="#F3EDE2" stroke-width="2"/>
+    <circle cx="40" cy="32" r="10" fill="#D8C49A"/>
+    <path d="M34.5 39h11l3.2 21h-17.4z" fill="#D8C49A"/>
+  </g>
+  <text x="122" y="44" fill="#F3EDE2" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="7">THE</text>
+  <text x="120" y="80" fill="#F3EDE2" font-family="Georgia, 'Times New Roman', serif" font-size="38" letter-spacing="6">SECRET SPOT</text>
+  <text x="122" y="102" fill="#D8C49A" font-family="Helvetica, Arial, sans-serif" font-size="10" letter-spacing="5">YOUR STYLE. YOUR SECRET.</text>
+</svg>

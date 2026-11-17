@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand: charcoal #171A18, champagne gold #D8C49A, cream #F3EDE2, taupe #8A8175, white */
+    --background: 0 0% 100%;
+    --foreground: 140 6% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 140 6% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 6% 10%;
+    --primary: 140 6% 10%;
+    --primary-foreground: 38 41% 92%;
+    --secondary: 38 41% 92%;
+    --secondary-foreground: 140 6% 10%;
+    --muted: 38 30% 95%;
+    --muted-foreground: 34 8% 40%;
+    --accent: 40 45% 73%;
+    --accent-foreground: 140 6% 10%;
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 20% 86%;
+    --input: 36 20% 82%;
+    --ring: 40 45% 60%;
+    --radius: 0.375rem;
+  }
+  * { @apply border-border; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-background text-foreground font-sans antialiased; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  :focus-visible { @apply outline-none ring-2 ring-ring ring-offset-2; }
+}
+
+@layer components {
+  .eyebrow { @apply text-[11px] font-medium uppercase tracking-brand text-taupe; }
+  .link-underline { @apply underline-offset-4 hover:underline; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

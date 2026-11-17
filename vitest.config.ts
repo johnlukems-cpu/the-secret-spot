@@ -4,6 +4,7 @@ import path from "node:path";
 export default defineConfig({
   resolve: { alias: { "@": path.resolve(__dirname, "src") } },
   test: {
+    fileParallelism: false,
     projects: [
       {
         resolve: { alias: { "@": path.resolve(__dirname, "src") } },
@@ -15,7 +16,6 @@ export default defineConfig({
           include: ["tests/db/**/*.test.ts"],
           environment: "node",
           globalSetup: ["tests/db/global-setup.ts"],
-          fileParallelism: false,
           testTimeout: 30000,
           hookTimeout: 120000,
         },
