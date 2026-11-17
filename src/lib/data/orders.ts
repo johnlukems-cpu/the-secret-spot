@@ -1,6 +1,7 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/env";
 
 export interface TrackedOrder {
   order: {
@@ -19,6 +20,7 @@ export interface TrackedOrder {
  * device cookie) or a phone-verified lookup from the tracking form.
  */
 export async function loadTrackedOrder(orderNumber: string, urlToken?: string): Promise<{ data: TrackedOrder | null; token?: string }> {
+  if (!isSupabaseConfigured()) return { data: null };
   const num = orderNumber.toUpperCase();
   const jar = await cookies();
   const token = urlToken || jar.get(`tss_o_${num}`)?.value;

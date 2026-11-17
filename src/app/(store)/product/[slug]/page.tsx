@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <Link href="/">Home</Link> / <Link href="/collectie">Collectie</Link>
         {product.category && <> / <Link href={`/collectie/${product.category.slug}`}>{product.category.name}</Link></>}
       </nav>
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 [&>*]:min-w-0">
         <Gallery images={product.images} title={product.title} />
         <div className="lg:sticky lg:top-28 lg:self-start">
           <div className="flex gap-2"><Badge variant={avail.variant}>{avail.label}</Badge>{compareAt && <Badge>Sale</Badge>}</div>

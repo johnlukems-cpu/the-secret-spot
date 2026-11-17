@@ -72,7 +72,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
       {o.status === "expired" && <Alert variant="warning" className="mt-6">Deze bestelling is verlopen omdat de aanbetaling niet op tijd is ontvangen. De gereserveerde artikelen zijn vrijgegeven. Neem contact met ons op als u wel heeft betaald.</Alert>}
       {o.status === "cancelled" && <Alert variant="warning" className="mt-6">Deze bestelling is geannuleerd.</Alert>}
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px]">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px] [&>*]:min-w-0">
         <div className="space-y-10">
           {payable && (
             <section className="rounded-lg border p-6">

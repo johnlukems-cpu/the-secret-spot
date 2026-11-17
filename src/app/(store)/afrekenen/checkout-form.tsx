@@ -65,7 +65,7 @@ export function CheckoutForm({ zones, prefill, policy, disclaimer, isLoggedIn }:
     <div className="container py-10">
       <h1 className="text-4xl">Afrekenen</h1>
       {!isLoggedIn && <p className="mt-2 text-sm text-taupe">U bestelt als gast. <Link href="/login?next=/afrekenen" className="underline">Inloggen</Link> om uw bestellingen in uw account te bewaren.</p>}
-      <form onSubmit={onSubmit} noValidate className="mt-8 grid gap-10 lg:grid-cols-[1fr_400px]">
+      <form onSubmit={onSubmit} noValidate className="mt-8 grid gap-10 lg:grid-cols-[1fr_400px] [&>*]:min-w-0">
         <div className="space-y-8">
           <fieldset className="space-y-4">
             <legend className="eyebrow mb-2">Uw gegevens</legend>

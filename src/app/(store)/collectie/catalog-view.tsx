@@ -113,7 +113,7 @@ export async function CatalogView({ searchParams, category }: { searchParams: SP
           ))}
         </div>
       )}
-      <div className="mt-8 grid gap-8 lg:grid-cols-[240px_1fr]">
+      <div className="mt-8 grid gap-8 lg:grid-cols-[240px_1fr] [&>*]:min-w-0">
         <aside>
           <details className="rounded-md border p-4 lg:hidden">
             <summary className="flex cursor-pointer items-center gap-2 text-sm font-medium"><SlidersHorizontal className="h-4 w-4" /> Filters & sorteren</summary>

@@ -83,7 +83,7 @@ export default async function HomePage() {
       {/* Category tiles */}
       <section className="container grid grid-cols-2 gap-3 py-10 md:grid-cols-5">
         {[["Dames", "dames"], ["Heren", "heren"], ["Kids", "kids"], ["Schoenen", "schoenen"], ["Accessoires", "accessoires"]].map(([n, s]) => (
-          <Link key={s} href={`/collectie/${s}`} className="group flex aspect-[4/3] items-end bg-cream p-4 transition hover:bg-cream-dark md:aspect-square last:col-span-2 md:last:col-span-1">
+          <Link key={s} href={`/collectie/${s}`} className="group flex aspect-[4/3] items-end bg-cream p-4 transition hover:bg-cream-dark md:aspect-square last:col-span-2 last:aspect-[8/3] md:last:col-span-1 md:last:aspect-square">
             <span className="font-display text-2xl">{n}<ArrowRight className="ml-1 inline h-4 w-4 transition group-hover:translate-x-1" /></span>
           </Link>
         ))}
@@ -150,7 +150,7 @@ export default async function HomePage() {
       )}
 
       <section className="bg-charcoal text-cream">
-        <div className="container grid gap-10 py-14 md:grid-cols-2">
+        <div className="container grid gap-10 py-14 md:grid-cols-2 [&>*]:min-w-0">
           <div>
             <h2 className="text-3xl">Blijf op de hoogte</h2>
             <p className="mt-2 text-sm text-cream/70">Nieuwe collecties, pre-order rondes en aanbiedingen als eerste in uw inbox.</p>

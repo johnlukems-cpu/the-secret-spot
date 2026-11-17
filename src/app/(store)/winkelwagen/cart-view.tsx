@@ -86,7 +86,7 @@ export function CartView() {
   return (
     <div className="container py-10">
       <h1 className="text-4xl">Winkelwagen</h1>
-      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
+      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px] [&>*]:min-w-0">
         <div className="space-y-8">
           {readyItems.length > 0 && (
             <section>

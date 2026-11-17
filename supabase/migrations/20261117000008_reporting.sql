@@ -154,4 +154,4 @@ end $$;
 -- Delivery staff may read the payments they collected (for receipts)
 create policy payments_delivery_select on public.payments for select
   using (public.has_permission('deliveries.view')
-         and exists (select 1 from public.delivery_payments dp where dp.payment_id = id));
+         and exists (select 1 from public.delivery_payments dp where dp.payment_id = payments.id));
