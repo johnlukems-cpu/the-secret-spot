@@ -126,3 +126,11 @@ begin
     from public.orders o where o.status not in ('cancelled', 'expired') and o.balance_due > 0 and o.amount_verified > 0
     order by o.status = 'delivered' desc, o.created_at;
 end $$;
+
+-- Document number for manually created purchase orders
+create or replace function public.next_po_number()
+returns text language plpgsql security definer set search_path = public as $$
+begin
+  perform public.require_permission('purchasing.manage');
+  return public.next_document_number('PO');
+end $$;
