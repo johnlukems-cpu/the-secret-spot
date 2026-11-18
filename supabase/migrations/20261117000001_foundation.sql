@@ -131,17 +131,17 @@ create table public.role_permissions (
 -- Role helpers. SECURITY DEFINER so they can be used inside RLS policies
 -- without recursive policy evaluation on user_roles.
 create or replace function public.has_role(_role public.app_role)
-returns boolean language sql stable security definer set search_path = public as $$
+returns boolean language sql stable security definer set search_path = public, extensions as $$
   select exists (select 1 from public.user_roles where user_id = auth.uid() and role = _role);
 $$;
 
 create or replace function public.is_staff()
-returns boolean language sql stable security definer set search_path = public as $$
+returns boolean language sql stable security definer set search_path = public, extensions as $$
   select exists (select 1 from public.user_roles where user_id = auth.uid() and role <> 'customer');
 $$;
 
 create or replace function public.has_permission(_code text)
-returns boolean language sql stable security definer set search_path = public as $$
+returns boolean language sql stable security definer set search_path = public, extensions as $$
   select exists (
     select 1 from public.user_roles ur
     where ur.user_id = auth.uid()
@@ -171,7 +171,7 @@ $$;
 
 -- Raise unless the current user holds the permission.
 create or replace function public.require_permission(_code text)
-returns void language plpgsql stable security definer set search_path = public as $$
+returns void language plpgsql stable security definer set search_path = public, extensions as $$
 begin
   if public.is_trusted_caller() then
     return;
@@ -183,7 +183,7 @@ end $$;
 
 -- New auth user -> profile row
 create or replace function public.handle_new_user() returns trigger
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, extensions as $$
 begin
   insert into public.profiles (id, email, full_name, phone)
   values (new.id, new.email,
@@ -227,14 +227,14 @@ create trigger trg_audit_immutable before update or delete on public.audit_logs
 create or replace function public.write_audit(
   _action text, _entity_type text, _entity_id text,
   _old jsonb default null, _new jsonb default null, _note text default null)
-returns void language sql security definer set search_path = public as $$
+returns void language sql security definer set search_path = public, extensions as $$
   insert into public.audit_logs (actor_id, action, entity_type, entity_id, old_data, new_data, note)
   values (auth.uid(), _action, _entity_type, _entity_id, _old, _new, _note);
 $$;
 
 -- Generic row-change audit trigger for sensitive tables
 create or replace function public.audit_row_change() returns trigger
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, extensions as $$
 begin
   insert into public.audit_logs (actor_id, action, entity_type, entity_id, old_data, new_data)
   values (auth.uid(), lower(tg_op), tg_table_name,
@@ -260,7 +260,7 @@ create trigger trg_business_settings_audit after insert or update or delete on p
 
 -- audit_row_change expects an "id" column; business_settings uses "key".
 create or replace function public.audit_settings_change() returns trigger
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, extensions as $$
 begin
   insert into public.audit_logs (actor_id, action, entity_type, entity_id, old_data, new_data)
   values (auth.uid(), lower(tg_op), 'business_settings',
@@ -274,7 +274,7 @@ create trigger trg_business_settings_audit after insert or update or delete on p
   for each row execute function public.audit_settings_change();
 
 create or replace function public.setting_numeric(_key text, _default numeric)
-returns numeric language sql stable security definer set search_path = public as $$
+returns numeric language sql stable security definer set search_path = public, extensions as $$
   select coalesce((select (value #>> '{}')::numeric from public.business_settings where key = _key), _default);
 $$;
 
@@ -287,7 +287,7 @@ create table public.document_sequences (
 
 -- e.g. next_document_number('TSS') -> TSS-2026-000123
 create or replace function public.next_document_number(_prefix text)
-returns text language plpgsql security definer set search_path = public as $$
+returns text language plpgsql security definer set search_path = public, extensions as $$
 declare
   _year int := extract(year from now())::int;
   _val int;

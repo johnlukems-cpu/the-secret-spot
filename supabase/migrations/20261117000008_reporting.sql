@@ -26,7 +26,7 @@ create view public.inventory_overview with (security_invoker = true) as
    where v.deleted_at is null and p.deleted_at is null;
 
 create or replace function public.report_data(_from date, _to date)
-returns jsonb language plpgsql stable security definer set search_path = public as $$
+returns jsonb language plpgsql stable security definer set search_path = public, extensions as $$
 declare
   _start timestamptz := _from::timestamptz;
   _end timestamptz := (_to + 1)::timestamptz;
@@ -118,7 +118,7 @@ end $$;
 create or replace function public.outstanding_balances()
 returns table (order_id uuid, order_number text, customer_name text, customer_whatsapp text, status public.order_status,
                total numeric, amount_verified numeric, balance_due numeric, created_at timestamptz)
-language plpgsql stable security definer set search_path = public as $$
+language plpgsql stable security definer set search_path = public, extensions as $$
 #variable_conflict use_column
 begin
   perform public.require_permission('finance.view');
@@ -129,7 +129,7 @@ end $$;
 
 -- Document number for manually created purchase orders
 create or replace function public.next_po_number()
-returns text language plpgsql security definer set search_path = public as $$
+returns text language plpgsql security definer set search_path = public, extensions as $$
 begin
   perform public.require_permission('purchasing.manage');
   return public.next_document_number('PO');
@@ -138,7 +138,7 @@ end $$;
 -- Minimal staff directory (names + roles) for assignment dropdowns
 create or replace function public.staff_directory()
 returns table (user_id uuid, full_name text, email text, roles public.app_role[])
-language plpgsql stable security definer set search_path = public as $$
+language plpgsql stable security definer set search_path = public, extensions as $$
 #variable_conflict use_column
 begin
   if not public.is_staff() and not public.is_trusted_caller() then

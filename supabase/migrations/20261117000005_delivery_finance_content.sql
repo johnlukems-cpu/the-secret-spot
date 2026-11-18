@@ -159,7 +159,7 @@ create table public.rate_limits (
 );
 
 create or replace function public.check_rate_limit(_bucket text, _max int, _window_seconds int)
-returns boolean language plpgsql security definer set search_path = public as $$
+returns boolean language plpgsql security definer set search_path = public, extensions as $$
 declare
   _ws timestamptz := to_timestamp(floor(extract(epoch from now()) / _window_seconds) * _window_seconds);
   _hits int;

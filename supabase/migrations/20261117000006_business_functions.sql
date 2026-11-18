@@ -10,7 +10,7 @@ alter table public.stock_reservations add column shipment_item_id uuid reference
 
 -- Rate lookup that returns null instead of raising (for reports)
 create or replace function public.try_exchange_rate(_from public.currency_code, _to public.currency_code, _on date default current_date)
-returns numeric language plpgsql stable security definer set search_path = public as $$
+returns numeric language plpgsql stable security definer set search_path = public, extensions as $$
 begin
   return public.get_exchange_rate(_from, _to, _on);
 exception when sqlstate 'P0002' then
@@ -33,7 +33,7 @@ returns numeric language sql stable as $$
 $$;
 
 create or replace function public.variant_available_qty(_variant_id uuid)
-returns int language sql stable security definer set search_path = public as $$
+returns int language sql stable security definer set search_path = public, extensions as $$
   select coalesce(sum(available_qty), 0)::int from public.inventory where variant_id = _variant_id;
 $$;
 
@@ -51,7 +51,7 @@ begin
 end $$;
 
 create or replace function public.enqueue_order_notification(_event text, _order_id uuid, _extra jsonb default '{}'::jsonb)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _t public.notification_templates;
@@ -90,7 +90,7 @@ end $$;
 -- Input: {"items":[{"variant_id":uuid,"quantity":int}], "zone_id":uuid?, "promo_code":text?}
 -- ---------------------------------------------------------------------
 create or replace function public.price_cart(_input jsonb)
-returns jsonb language plpgsql stable security definer set search_path = public as $$
+returns jsonb language plpgsql stable security definer set search_path = public, extensions as $$
 declare
   _ready_pct numeric := public.setting_numeric('deposit_ready_pct', 50);
   _pre_pct numeric := public.setting_numeric('deposit_preorder_pct', 50);
@@ -276,7 +276,7 @@ end $$;
 create or replace function public._reserve_stock(_order_id uuid, _order_item_id uuid, _variant_id uuid, _qty int,
                                                  _expires timestamptz, _shipment_item_id uuid default null,
                                                  _location_id uuid default null)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _inv record;
   _left int := _qty;
@@ -305,7 +305,7 @@ begin
 end $$;
 
 create or replace function public._release_reservation(_res public.stock_reservations, _new_status public.reservation_status, _reason text)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 begin
   update public.inventory set reserved_qty = reserved_qty - _res.quantity
    where variant_id = _res.variant_id and location_id = _res.location_id;
@@ -320,7 +320,7 @@ end $$;
 -- Returns order id/number and a one-time guest access token.
 -- ---------------------------------------------------------------------
 create or replace function public.create_order(_input jsonb)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare
   _calc jsonb;
   _line jsonb;
@@ -450,7 +450,7 @@ end $$;
 
 -- Latest known landed unit cost (actual reconciled cost preferred over estimates)
 create or replace function public.latest_estimated_unit_cost(_variant_id uuid)
-returns numeric language sql stable security definer set search_path = public as $$
+returns numeric language sql stable security definer set search_path = public, extensions as $$
   select landed_cost_srd from public.cost_calculations
    where variant_id = _variant_id order by is_estimate asc, created_at desc limit 1;
 $$;
@@ -459,7 +459,7 @@ $$;
 -- Order access check (customer owns it or presents the guest token)
 -- ---------------------------------------------------------------------
 create or replace function public._order_access(_order_number text, _token text)
-returns public.orders language plpgsql stable security definer set search_path = public as $$
+returns public.orders language plpgsql stable security definer set search_path = public, extensions as $$
 declare _o public.orders;
 begin
   select * into _o from public.orders where order_number = upper(trim(_order_number));
@@ -478,7 +478,7 @@ end $$;
 -- Guest order tracking. Verifies either the access token or the WhatsApp number
 -- (last 7 digits) belonging to the order.
 create or replace function public.track_order(_order_number text, _token text default null, _whatsapp text default null)
-returns jsonb language plpgsql stable security definer set search_path = public as $$
+returns jsonb language plpgsql stable security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _digits text := right(regexp_replace(coalesce(_whatsapp, ''), '\D', '', 'g'), 7);
@@ -519,7 +519,7 @@ end $$;
 
 -- Approved bank instructions for checkout (never the full table).
 create or replace function public.checkout_bank_instructions()
-returns jsonb language sql stable security definer set search_path = public as $$
+returns jsonb language sql stable security definer set search_path = public, extensions as $$
   select coalesce(jsonb_agg(jsonb_build_object(
     'bank_name', bank_name, 'account_holder', account_holder, 'account_number', account_number,
     'currency', currency, 'instructions', instructions, 'reference_format', reference_format) order by sort_order), '[]'::jsonb)
@@ -530,7 +530,7 @@ $$;
 -- Recalculate order payment state from verified allocations.
 -- ---------------------------------------------------------------------
 create or replace function public._refresh_order_payment(_order_id uuid)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _verified numeric;
@@ -585,7 +585,7 @@ end $$;
 
 -- When every line is physically reserved/allocated, the order is ready for delivery.
 create or replace function public._refresh_order_readiness(_order_id uuid)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _not_ready int;
@@ -613,7 +613,7 @@ end $$;
 create or replace function public.submit_payment(_order_number text, _token text, _amount numeric, _reference text,
                                                  _payer_name text default null, _transaction_date date default null,
                                                  _proof jsonb default null)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _pay_id uuid;
@@ -668,7 +668,7 @@ end $$;
 -- Staff: verification workflow
 -- ---------------------------------------------------------------------
 create or replace function public.mark_payment_under_verification(_payment_id uuid)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _p public.payments;
 begin
   perform public.require_permission('payments.verify');
@@ -685,7 +685,7 @@ end $$;
 -- _verified_amount lets finance correct the amount to what actually arrived.
 create or replace function public.verify_payment(_payment_id uuid, _approve boolean, _note text default null,
                                                  _verified_amount numeric default null)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _p public.payments;
   _o public.orders;
@@ -733,7 +733,7 @@ end $$;
 create or replace function public.record_payment(_order_id uuid, _amount numeric, _method public.payment_method,
                                                  _reference text default null, _delivery_id uuid default null,
                                                  _note text default null)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _pay_id uuid;
@@ -786,7 +786,7 @@ end $$;
 -- Cancellation (releases reservations; refunds are a separate decision)
 -- ---------------------------------------------------------------------
 create or replace function public.cancel_order(_order_id uuid, _reason text, _token text default null)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _o public.orders;
   _res public.stock_reservations;
@@ -834,7 +834,7 @@ end $$;
 -- Run every 15 minutes (Vercel cron -> /api/cron/maintenance or pg_cron).
 -- ---------------------------------------------------------------------
 create or replace function public.run_expiry_jobs()
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare
   _res public.stock_reservations;
   _released int := 0;
@@ -872,7 +872,7 @@ end $$;
 -- ---------------------------------------------------------------------
 create or replace function public.adjust_inventory(_variant_id uuid, _location_id uuid, _kind text, _qty int, _reason text,
                                                    _unit_cost numeric default null)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare
   _inv public.inventory;
   _delta int;
@@ -913,7 +913,7 @@ begin
 end $$;
 
 create or replace function public.transfer_stock(_variant_id uuid, _from uuid, _to uuid, _qty int, _reason text)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _src public.inventory;
 begin
   perform public.require_permission('inventory.manage');
@@ -940,7 +940,7 @@ returns table (
   supplier_id uuid, supplier_name text, product_id uuid, product_title text, variant_id uuid, sku text,
   size text, color text, total_units int, supplier_unit_cost numeric, supplier_currency public.currency_code,
   total_supplier_cost numeric, order_count int, order_item_ids uuid[])
-language plpgsql stable security definer set search_path = public as $$
+language plpgsql stable security definer set search_path = public, extensions as $$
 #variable_conflict use_column
 begin
   perform public.require_permission('purchasing.manage');
@@ -976,7 +976,7 @@ end $$;
 
 -- Create a batch for one supplier containing all its eligible open units.
 create or replace function public.create_purchase_batch(_supplier_id uuid, _week_start date default null, _notes text default null)
-returns uuid language plpgsql security definer set search_path = public as $$
+returns uuid language plpgsql security definer set search_path = public, extensions as $$
 declare
   _batch_id uuid;
   _r record;
@@ -1032,7 +1032,7 @@ end $$;
 
 -- Generate a draft purchase order from a batch (lines grouped by variant)
 create or replace function public.create_po_from_batch(_batch_id uuid)
-returns uuid language plpgsql security definer set search_path = public as $$
+returns uuid language plpgsql security definer set search_path = public, extensions as $$
 declare _b public.purchase_batches; _po uuid;
 begin
   perform public.require_permission('purchasing.manage');
@@ -1058,7 +1058,7 @@ end $$;
 
 -- PO status changes ripple to batch & customer order items
 create or replace function public.set_purchase_order_status(_po_id uuid, _status public.purchase_status)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _po public.purchase_orders;
 begin
   perform public.require_permission('purchasing.manage');
@@ -1086,7 +1086,7 @@ end $$;
 -- Shipments
 -- ---------------------------------------------------------------------
 create or replace function public.set_shipment_status(_shipment_id uuid, _status public.shipment_status)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _s public.shipments;
 begin
   perform public.require_permission('shipments.manage');
@@ -1124,7 +1124,7 @@ end $$;
 
 -- Goods value (SRD) for shipment lines, using the rate on the departure date.
 create or replace function public._shipment_goods_value(_shipment_id uuid)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _s public.shipments;
 begin
   select * into _s from public.shipments where id = _shipment_id;
@@ -1138,7 +1138,7 @@ end $$;
 -- Allocate shipment import costs to lines by value/weight/volume/units/manual.
 -- Uses actual (non-estimate) costs when any exist, else estimates.
 create or replace function public.allocate_shipment_costs(_shipment_id uuid, _method public.allocation_method default null)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare
   _s public.shipments;
   _m public.allocation_method;
@@ -1236,7 +1236,7 @@ end $$;
 -- allocated first-in-first-out to waiting pre-order customers.
 -- _lines: [{"shipment_item_id":uuid,"received":int,"damaged":int}]
 create or replace function public.receive_shipment(_shipment_id uuid, _lines jsonb, _location_id uuid default null)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare
   _s public.shipments;
   _l jsonb;
@@ -1350,7 +1350,7 @@ end $$;
 -- ---------------------------------------------------------------------
 -- Converts reservations into sales (stock leaves the building).
 create or replace function public._fulfil_order_stock(_order_id uuid)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _res public.stock_reservations; _cost numeric;
 begin
   for _res in select * from public.stock_reservations where order_id = _order_id and status = 'active' for update loop
@@ -1373,7 +1373,7 @@ end $$;
 create or replace function public.update_delivery_status(_delivery_id uuid, _status public.delivery_status,
                                                          _note text default null, _scheduled date default null,
                                                          _assigned_to uuid default null)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 declare _d public.deliveries; _o public.orders;
 begin
   perform public.require_permission('deliveries.manage');
@@ -1428,7 +1428,7 @@ end $$;
 -- ---------------------------------------------------------------------
 create or replace function public.record_refund(_order_id uuid, _amount numeric, _reason text,
                                                 _method public.payment_method default 'bank_transfer', _reference text default null)
-returns uuid language plpgsql security definer set search_path = public as $$
+returns uuid language plpgsql security definer set search_path = public, extensions as $$
 declare _o public.orders; _id uuid;
 begin
   perform public.require_permission('payments.refund');
@@ -1451,7 +1451,7 @@ end $$;
 -- Verified payments on undelivered orders are customer deposits (liability).
 -- ---------------------------------------------------------------------
 create or replace function public.dashboard_stats()
-returns jsonb language plpgsql stable security definer set search_path = public as $$
+returns jsonb language plpgsql stable security definer set search_path = public, extensions as $$
 begin
   perform public.require_permission('dashboard.view');
   return jsonb_build_object(
@@ -1482,7 +1482,7 @@ begin
 end $$;
 
 create or replace function public.financial_summary(_from date, _to date)
-returns jsonb language plpgsql stable security definer set search_path = public as $$
+returns jsonb language plpgsql stable security definer set search_path = public, extensions as $$
 declare
   _start timestamptz := _from::timestamptz;
   _end timestamptz := (_to + 1)::timestamptz;

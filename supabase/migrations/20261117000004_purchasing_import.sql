@@ -22,7 +22,7 @@ create trigger trg_exchange_rates_audit after insert or update or delete on publ
 -- Rate lookup. Never assumes a rate: raises when none is configured.
 -- Tries a direct rate, then the inverse of the reverse rate.
 create or replace function public.get_exchange_rate(_from public.currency_code, _to public.currency_code, _on date default current_date)
-returns numeric language plpgsql stable security definer set search_path = public as $$
+returns numeric language plpgsql stable security definer set search_path = public, extensions as $$
 declare _r numeric;
 begin
   if _from = _to then return 1; end if;

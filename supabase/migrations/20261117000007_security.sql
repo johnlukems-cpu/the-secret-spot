@@ -65,7 +65,7 @@ select 'delivery_manager', unnest(array['deliveries.view','deliveries.manage','p
 
 -- Role assignment with escalation guard
 create or replace function public.assign_role(_user_id uuid, _role public.app_role, _grant boolean default true)
-returns void language plpgsql security definer set search_path = public as $$
+returns void language plpgsql security definer set search_path = public, extensions as $$
 begin
   perform public.require_permission('users.manage');
   if _role in ('super_admin', 'admin') and not (public.is_trusted_caller() or public.has_role('super_admin')) then
@@ -84,7 +84,7 @@ begin
 end $$;
 
 create or replace function public.my_permissions()
-returns text[] language sql stable security definer set search_path = public as $$
+returns text[] language sql stable security definer set search_path = public, extensions as $$
   select coalesce(array_agg(distinct p.code), '{}') from public.permissions p
    where public.has_permission(p.code);
 $$;
@@ -153,7 +153,7 @@ end $$;
 
 -- helper: "own order" check
 create or replace function public.owns_order(_order_id uuid)
-returns boolean language sql stable security definer set search_path = public as $$
+returns boolean language sql stable security definer set search_path = public, extensions as $$
   select exists (select 1 from public.orders where id = _order_id and user_id = auth.uid() and auth.uid() is not null);
 $$;
 

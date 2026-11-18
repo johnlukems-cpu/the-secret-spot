@@ -9,6 +9,11 @@ do $$ begin
 end $$;
 grant anon, authenticated, service_role to authenticator;
 
+-- Like Supabase: pgcrypto lives in the "extensions" schema, not "public".
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
+grant usage on schema extensions to anon, authenticated, service_role;
+
 create schema if not exists auth;
 create table if not exists auth.users (
   id uuid primary key default gen_random_uuid(),
