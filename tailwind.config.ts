@@ -7,10 +7,10 @@ const config: Config = {
     container: { center: true, padding: { DEFAULT: "1rem", md: "2rem" }, screens: { "2xl": "1360px" } },
     extend: {
       colors: {
-        charcoal: { DEFAULT: "#171A18", 800: "#22262330", 700: "#2B302C" },
-        gold: { DEFAULT: "#D8C49A", dark: "#B8A274", light: "#E9DCC0" },
-        cream: { DEFAULT: "#F3EDE2", dark: "#E8DFCF" },
-        taupe: { DEFAULT: "#8A8175", light: "#B5AEA3" },
+        charcoal: { DEFAULT: "#4A0B1C", 800: "#3A0815", 700: "#62112A" },
+        gold: { DEFAULT: "#E8C2BD", dark: "#D9A39C", light: "#F4DEDA" },
+        cream: { DEFAULT: "#F8EDE4", dark: "#F0DDD0" },
+        taupe: { DEFAULT: "#8A6468", light: "#B8999C" },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

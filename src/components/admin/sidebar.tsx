@@ -37,14 +37,14 @@ export function AdminSidebar({ nav, user }: { nav: NavGroup[]; user: { email: st
   return (
     <>
       <div className="sticky top-0 z-30 flex h-14 items-center justify-between bg-charcoal px-4 text-cream lg:hidden">
-        <Link href="/admin" className="flex items-center gap-2 font-display text-lg tracking-widest"><LogoMark className="h-6 w-6" /> ADMIN</Link>
+        <Link href="/admin" className="flex items-center gap-2 font-display text-lg tracking-widest"><LogoMark className="h-6 w-6" tone="light" /> ADMIN</Link>
         <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-expanded={open}>{open ? <Icons.X /> : <Icons.Menu />}</button>
       </div>
       {open && <div className="fixed inset-0 top-14 z-30 overflow-y-auto bg-charcoal p-4 lg:hidden">{content}</div>}
       <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col overflow-y-auto bg-charcoal p-4 lg:flex">
         <Link href="/admin" className="mb-6 flex items-center gap-2 px-2 text-cream">
-          <LogoMark className="h-7 w-7" />
-          <span className="font-display text-lg tracking-[0.2em]">SECRET SPOT</span>
+          <LogoMark className="h-7 w-7" tone="light" />
+          <span className="font-display text-lg tracking-[0.2em]">SECRET GIRL</span>
         </Link>
         <div className="flex-1">{content}</div>
         <div className="mt-6 border-t border-cream/10 px-3 pt-4 text-xs text-cream/60">

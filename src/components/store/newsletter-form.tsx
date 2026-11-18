@@ -15,7 +15,7 @@ export function NewsletterForm() {
       </div>
       <label className="flex items-start gap-2 text-xs text-cream/70">
         <input type="checkbox" name="consent" required className="mt-0.5" />
-        Ik wil nieuws en aanbiedingen van The Secret Spot ontvangen en kan mij altijd afmelden.
+        Ik wil nieuws en aanbiedingen van The Secret Girl ontvangen en kan mij altijd afmelden.
       </label>
       {state && !state.ok && <p className="text-xs text-red-300">{state.error}</p>}
     </form>

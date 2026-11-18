@@ -31,7 +31,7 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
     supabase.from("notifications").select("id, event, channel, status, error, created_at").eq("order_id", id).order("created_at", { ascending: false }).limit(30),
     supabase.from("refunds").select("*").eq("order_id", id),
   ]);
-  const wa = whatsappLink(o.customer_whatsapp, `Hallo ${o.customer_name}, dit is The Secret Spot over uw bestelling ${o.order_number}.`);
+  const wa = whatsappLink(o.customer_whatsapp, `Hallo ${o.customer_name}, dit is The Secret Girl over uw bestelling ${o.order_number}.`);
   const active = !["cancelled", "expired", "completed"].includes(o.status);
 
   return (

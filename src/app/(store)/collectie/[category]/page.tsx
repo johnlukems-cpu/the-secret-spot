@@ -11,7 +11,7 @@ async function findCategory(slug: string) {
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const { category } = await params;
   const c = await findCategory(category);
-  return c ? { title: c.name, description: `Shop ${c.name} bij THE SECRET SPOT – levering in heel Suriname.`, alternates: { canonical: `/collectie/${category}` } } : {};
+  return c ? { title: c.name, description: `Shop ${c.name} bij THE SECRET GIRL – levering in heel Suriname.`, alternates: { canonical: `/collectie/${category}` } } : {};
 }
 
 export default async function CategoryPage({ params, searchParams }: { params: Promise<{ category: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> }) {

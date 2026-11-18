@@ -47,7 +47,7 @@ export function Footer({ settings }: { settings: Record<string, unknown> }) {
           )}
         </div>
       </div>
-      <div className="border-t border-cream/10 py-5 text-center text-xs text-cream/50">© {new Date().getFullYear()} THE SECRET SPOT · YOUR STYLE. YOUR SECRET.</div>
+      <div className="border-t border-cream/10 py-5 text-center text-xs text-cream/50">© {new Date().getFullYear()} THE SECRET GIRL · YOUR STYLE. YOUR SECRET.</div>
     </footer>
   );
 }

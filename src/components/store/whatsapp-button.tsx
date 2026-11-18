@@ -2,7 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { whatsappLink } from "@/lib/whatsapp";
 
 export function WhatsAppButton({ number }: { number?: string | null }) {
-  const href = whatsappLink(number, "Hallo The Secret Spot, ik heb een vraag.");
+  const href = whatsappLink(number, "Hallo The Secret Girl, ik heb een vraag.");
   if (!href) return null;
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Chat via WhatsApp"

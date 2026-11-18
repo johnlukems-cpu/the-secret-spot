@@ -42,4 +42,5 @@
 - [ ] Privacy text (Admin → Website content → page `privacy`)
 - [ ] Resend API key + verified sending domain; WhatsApp Business API (Meta app, phone number ID, approved templates)
 - [ ] Staff accounts with the right roles
+- [ ] If the database was set up before the rename: run `supabase/setup/05_rebrand_the_secret_girl.sql`
 - [ ] Run `E2E_LIVE=1 npm run test:e2e` against staging

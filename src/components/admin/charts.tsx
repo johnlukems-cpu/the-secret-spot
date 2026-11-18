@@ -1,9 +1,9 @@
 "use client";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
 
-const GOLD = "#B8A274";
-const CHARCOAL = "#171A18";
-const TAUPE = "#8A8175";
+const GOLD = "#C98A86";
+const CHARCOAL = "#4A0B1C";
+const TAUPE = "#8A6468";
 const fmt = (v: number) => new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 0 }).format(v);
 
 export function LineSeries({ data, x, lines, height = 260 }: { data: Record<string, unknown>[]; x: string; lines: { key: string; label: string }[]; height?: number }) {
@@ -52,7 +52,7 @@ export function Donut({ data, nameKey, valueKey, height = 220 }: { data: Record<
     <ResponsiveContainer width="100%" height={height}>
       <PieChart>
         <Pie data={data} dataKey={valueKey} nameKey={nameKey} innerRadius="55%" outerRadius="85%" paddingAngle={2}>
-          {data.map((_, i) => <Cell key={i} fill={[CHARCOAL, GOLD, TAUPE, "#D8C49A"][i % 4]} />)}
+          {data.map((_, i) => <Cell key={i} fill={[CHARCOAL, GOLD, TAUPE, "#7B0F2B"][i % 4]} />)}
         </Pie>
         <Tooltip formatter={(v: number) => fmt(v)} />
         <Legend wrapperStyle={{ fontSize: 12 }} />

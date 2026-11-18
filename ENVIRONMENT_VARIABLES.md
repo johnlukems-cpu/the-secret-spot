@@ -9,7 +9,7 @@
 | `CRON_SECRET` | **server** | yes | Bearer token for `/api/cron/maintenance` (Vercel sends it automatically) |
 | `IP_HASH_SALT` | **server** | recommended | Salt for hashing IPs in rate limiting |
 | `RESEND_API_KEY` | **server** | optional | E-mail sending. Without it, e-mails are logged as "not configured". |
-| `EMAIL_FROM` | **server** | with Resend | Verified sender, e.g. `THE SECRET SPOT <info@domain>` |
+| `EMAIL_FROM` | **server** | with Resend | Verified sender, e.g. `THE SECRET GIRL <info@domain>` |
 | `WHATSAPP_ACCESS_TOKEN` | **server** | optional | Meta WhatsApp Cloud API permanent token |
 | `WHATSAPP_PHONE_NUMBER_ID` | **server** | optional | WhatsApp sender phone number ID |
 | `WHATSAPP_API_VERSION` | server | optional | Graph API version (default `v21.0`) |

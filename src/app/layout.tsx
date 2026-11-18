@@ -9,13 +9,13 @@ const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap
 
 export const metadata: Metadata = {
   metadataBase: new URL(publicEnv.siteUrl),
-  title: { default: "THE SECRET SPOT – Mode voor het hele gezin in Suriname", template: "%s | THE SECRET SPOT" },
+  title: { default: "THE SECRET GIRL – Mode voor het hele gezin in Suriname", template: "%s | THE SECRET GIRL" },
   description: "YOUR STYLE. YOUR SECRET. Online mode voor dames, heren en kids in Suriname – direct leverbaar of als pre-order. Levering in heel Suriname.",
-  openGraph: { type: "website", locale: "nl_SR", siteName: "THE SECRET SPOT", images: ["/brand/logo.svg"] },
+  openGraph: { type: "website", locale: "nl_SR", siteName: "THE SECRET GIRL", images: ["/brand/logo.svg"] },
   alternates: { canonical: "/" },
 };
 
-export const viewport: Viewport = { themeColor: "#171A18", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#4A0B1C", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

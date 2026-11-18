@@ -15,7 +15,7 @@ async function sendEmail(n: QueuedNotification): Promise<{ id?: string }> {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${serverEnv.resendApiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: serverEnv.emailFrom, to: [n.recipient], subject: n.subject ?? "THE SECRET SPOT", text: n.body }),
+    body: JSON.stringify({ from: serverEnv.emailFrom, to: [n.recipient], subject: n.subject ?? "THE SECRET GIRL", text: n.body }),
   });
   if (!res.ok) throw new Error(`Email provider error ${res.status}: ${(await res.text()).slice(0, 300)}`);
   return (await res.json()) as { id?: string };

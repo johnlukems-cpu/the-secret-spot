@@ -7,7 +7,7 @@
 
 -- Business settings (is_public = readable by the storefront)
 insert into public.business_settings (key, value, description, is_public) values
-  ('store_name', '"THE SECRET SPOT"', 'Store name', true),
+  ('store_name', '"THE SECRET GIRL"', 'Store name', true),
   ('store_tagline', '"YOUR STYLE. YOUR SECRET."', 'Tagline', true),
   ('store_whatsapp', '""', 'WhatsApp number for click-to-chat (international format, e.g. 5978xxxxxx). Owner must set.', true),
   ('store_email', '""', 'Public contact email. Owner must set.', true),
@@ -22,8 +22,8 @@ insert into public.business_settings (key, value, description, is_public) values
   ('quote_validity_hours', '72', 'Hours a quotation remains valid', true),
   ('verification_grace_hours', '72', 'Extra hours stock stays reserved after a customer submits payment proof', false),
   ('purchasing_weekday', '1', 'ISO weekday of the weekly purchasing run (1 = Monday)', true),
-  ('cancellation_policy', '"Annuleringsvoorwaarden: nog niet vastgesteld door The Secret Spot. Neem contact op voor informatie."', 'Published cancellation & refund terms (shown on quotations and checkout). Owner must set.', true),
-  ('payment_disclaimer', '"Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Spot is geverifieerd."', 'Payment disclaimer', true),
+  ('cancellation_policy', '"Annuleringsvoorwaarden: nog niet vastgesteld door The Secret Girl. Neem contact op voor informatie."', 'Published cancellation & refund terms (shown on quotations and checkout). Owner must set.', true),
+  ('payment_disclaimer', '"Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Girl is geverifieerd."', 'Payment disclaimer', true),
   ('low_stock_default', '2', 'Default low-stock threshold', false)
 on conflict (key) do nothing;
 
@@ -97,8 +97,8 @@ on conflict (slug) do nothing;
 
 -- Notification templates (Dutch)
 insert into public.notification_templates (event, channel, subject, body) values
-  ('order_created', 'email', 'Uw bestelling {order_number} bij The Secret Spot', E'Beste {customer_name},\n\nBedankt voor uw bestelling {order_number}.\nTotaal: {currency} {total}\nVereiste aanbetaling: {currency} {deposit_required}\nBetaal uiterlijk {payment_deadline}.\n\nUw bestelling wordt pas bevestigd nadat uw betaling door The Secret Spot is geverifieerd.'),
-  ('order_created', 'whatsapp', null, E'Hallo {customer_name}, bedankt voor uw bestelling {order_number} bij THE SECRET SPOT. Totaal {currency} {total}, aanbetaling {currency} {deposit_required}. Betaal vóór {payment_deadline}.'),
+  ('order_created', 'email', 'Uw bestelling {order_number} bij The Secret Girl', E'Beste {customer_name},\n\nBedankt voor uw bestelling {order_number}.\nTotaal: {currency} {total}\nVereiste aanbetaling: {currency} {deposit_required}\nBetaal uiterlijk {payment_deadline}.\n\nUw bestelling wordt pas bevestigd nadat uw betaling door The Secret Girl is geverifieerd.'),
+  ('order_created', 'whatsapp', null, E'Hallo {customer_name}, bedankt voor uw bestelling {order_number} bij THE SECRET GIRL. Totaal {currency} {total}, aanbetaling {currency} {deposit_required}. Betaal vóór {payment_deadline}.'),
   ('quotation_created', 'email', 'Offerte voor bestelling {order_number}', E'Beste {customer_name},\n\nUw offerte voor bestelling {order_number} staat klaar. Totaal {currency} {total}.'),
   ('payment_instructions', 'email', 'Betaalinstructies {order_number}', E'Beste {customer_name},\n\nMaak {currency} {deposit_required} over en vermeld als omschrijving: {order_number}.\nNa uw overboeking kunt u uw betaalreferentie en betaalbewijs uploaden via de link in uw bestelbevestiging.'),
   ('payment_instructions', 'whatsapp', null, E'Betaalinstructies {order_number}: maak {currency} {deposit_required} over en vermeld {order_number} als omschrijving. Upload daarna uw betaalbewijs via de link in uw bevestiging.'),
@@ -109,7 +109,7 @@ insert into public.notification_templates (event, channel, subject, body) values
   ('payment_rejected', 'email', 'Betaling niet goedgekeurd – {order_number}', E'Beste {customer_name},\n\nWe konden uw betaling voor {order_number} niet verifiëren. Reden: {reason}.\nNeem contact met ons op.'),
   ('payment_rejected', 'whatsapp', null, 'We konden uw betaling voor {order_number} niet verifiëren. Reden: {reason}. Neem contact met ons op.'),
   ('order_confirmed', 'email', 'Bestelling bevestigd – {order_number}', E'Beste {customer_name},\n\nUw bestelling {order_number} is bevestigd.'),
-  ('order_confirmed', 'whatsapp', null, 'Uw bestelling {order_number} bij THE SECRET SPOT is bevestigd!'),
+  ('order_confirmed', 'whatsapp', null, 'Uw bestelling {order_number} bij THE SECRET GIRL is bevestigd!'),
   ('supplier_order_placed', 'email', 'Uw pre-order is ingekocht – {order_number}', E'Beste {customer_name},\n\nDe artikelen van uw pre-order {order_number} zijn bij onze leverancier besteld. Alle leverdata zijn schattingen.'),
   ('shipment_dispatched', 'email', 'Uw pre-order is onderweg – {order_number}', E'Beste {customer_name},\n\nDe zending met artikelen van uw bestelling {order_number} is verzonden.'),
   ('shipment_arrived', 'email', 'Zending aangekomen in Suriname – {order_number}', E'Beste {customer_name},\n\nDe zending met uw artikelen is in Suriname aangekomen en wordt gecontroleerd.'),
@@ -119,8 +119,8 @@ insert into public.notification_templates (event, channel, subject, body) values
   ('delivery_scheduled', 'whatsapp', null, 'Uw levering voor {order_number} is ingepland op {scheduled_date}. Saldo: {currency} {balance_due}.'),
   ('balance_reminder', 'email', 'Openstaand saldo – {order_number}', E'Beste {customer_name},\n\nEr staat nog {currency} {balance_due} open voor bestelling {order_number}.'),
   ('balance_reminder', 'whatsapp', null, 'Herinnering: er staat nog {currency} {balance_due} open voor bestelling {order_number}.'),
-  ('order_completed', 'email', 'Bedankt! Bestelling {order_number} afgerond', E'Beste {customer_name},\n\nUw bestelling {order_number} is afgerond. Bedankt voor uw aankoop bij THE SECRET SPOT!'),
-  ('order_completed', 'whatsapp', null, 'Bedankt voor uw aankoop bij THE SECRET SPOT! Bestelling {order_number} is afgerond.')
+  ('order_completed', 'email', 'Bedankt! Bestelling {order_number} afgerond', E'Beste {customer_name},\n\nUw bestelling {order_number} is afgerond. Bedankt voor uw aankoop bij THE SECRET GIRL!'),
+  ('order_completed', 'whatsapp', null, 'Bedankt voor uw aankoop bij THE SECRET GIRL! Bestelling {order_number} is afgerond.')
 on conflict (event, channel, locale) do nothing;
 
 -- Homepage content (editable in Admin → Website Content)

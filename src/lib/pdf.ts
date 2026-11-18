@@ -1,9 +1,9 @@
 import "server-only";
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 
-const CHARCOAL = rgb(0x17 / 255, 0x1a / 255, 0x18 / 255);
-const GOLD = rgb(0xd8 / 255, 0xc4 / 255, 0x9a / 255);
-const TAUPE = rgb(0x8a / 255, 0x81 / 255, 0x75 / 255);
+const CHARCOAL = rgb(0x4a / 255, 0x0b / 255, 0x1c / 255);
+const GOLD = rgb(0xe8 / 255, 0xc2 / 255, 0xbd / 255);
+const TAUPE = rgb(0x8a / 255, 0x64 / 255, 0x68 / 255);
 const A4: [number, number] = [595.28, 841.89];
 const M = 48;
 
@@ -27,7 +27,7 @@ export class DocBuilder {
     const b = new DocBuilder();
     b.doc = await PDFDocument.create();
     b.doc.setTitle(safe(title));
-    b.doc.setProducer("THE SECRET SPOT");
+    b.doc.setProducer("THE SECRET GIRL");
     b.font = await b.doc.embedFont(StandardFonts.Helvetica);
     b.bold = await b.doc.embedFont(StandardFonts.HelveticaBold);
     b.newPage();
@@ -41,10 +41,9 @@ export class DocBuilder {
     this.page = this.doc.addPage(A4);
     const { width, height } = this.page.getSize();
     this.page.drawRectangle({ x: 0, y: height - 70, width, height: 70, color: CHARCOAL });
-    this.page.drawCircle({ x: M + 14, y: height - 35, size: 14, borderColor: rgb(0.95, 0.93, 0.89), borderWidth: 1 });
-    this.page.drawCircle({ x: M + 14, y: height - 31, size: 4, color: GOLD });
-    this.page.drawRectangle({ x: M + 11.5, y: height - 44, width: 5, height: 9, color: GOLD });
-    this.page.drawText("THE SECRET SPOT", { x: M + 38, y: height - 38, size: 15, font: this.bold, color: rgb(0.95, 0.93, 0.89) });
+    this.page.drawCircle({ x: M + 14, y: height - 35, size: 15, color: rgb(0.973, 0.929, 0.894) });
+    this.page.drawText("TSG", { x: M + 14 - this.font.widthOfTextAtSize("TSG", 10) / 2, y: height - 38.5, size: 10, font: this.font, color: CHARCOAL });
+    this.page.drawText("THE SECRET GIRL", { x: M + 38, y: height - 38, size: 15, font: this.bold, color: rgb(0.95, 0.93, 0.89) });
     this.page.drawText("YOUR STYLE. YOUR SECRET.", { x: M + 38, y: height - 52, size: 7, font: this.font, color: GOLD });
     this.page.drawText(safe(`Pagina ${this.doc.getPageCount()}`), { x: width - M - 50, y: 24, size: 8, font: this.font, color: TAUPE });
     this.y = height - 100;
@@ -104,7 +103,7 @@ export class DocBuilder {
       this.y -= 16;
     };
     this.ensure(30);
-    this.page.drawRectangle({ x: M, y: this.y - 4, width: total, height: 16, color: rgb(0.953, 0.929, 0.886) });
+    this.page.drawRectangle({ x: M, y: this.y - 4, width: total, height: 16, color: rgb(0.973, 0.929, 0.894) });
     drawRow(headers, true);
     rows.forEach((r) => drawRow(r));
     this.page.drawLine({ start: { x: M, y: this.y + 10 }, end: { x: M + total, y: this.y + 10 }, thickness: 0.5, color: TAUPE });

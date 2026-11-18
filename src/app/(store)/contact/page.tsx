@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Contact" };
 
 export default async function ContactPage() {
   const settings = await getPublicSettings();
-  const wa = whatsappLink(settings.store_whatsapp as string, "Hallo The Secret Spot!");
+  const wa = whatsappLink(settings.store_whatsapp as string, "Hallo The Secret Girl!");
   const email = settings.store_email as string;
   return (
     <div className="container grid max-w-5xl gap-12 py-16 md:grid-cols-2">

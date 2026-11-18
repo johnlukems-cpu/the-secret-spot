@@ -42,7 +42,7 @@ export default async function DeliveriesPage({ searchParams }: { searchParams: P
       <div className="grid gap-4 xl:grid-cols-2">
         {(data ?? []).map((d) => {
           const o = d.orders as unknown as { id: string; order_number: string; status: string; total: string; amount_verified: string; balance_due: string };
-          const wa = whatsappLink(d.customer_whatsapp, `Hallo ${d.customer_name}, dit is The Secret Spot over de levering van ${o.order_number}.`);
+          const wa = whatsappLink(d.customer_whatsapp, `Hallo ${d.customer_name}, dit is The Secret Girl over de levering van ${o.order_number}.`);
           const receipts = (d.delivery_payments ?? []) as { receipt_number: string; payment_id: string; payments: { amount: string; method: string; status: string } }[];
           const final = ["delivered"].includes(d.status);
           return (

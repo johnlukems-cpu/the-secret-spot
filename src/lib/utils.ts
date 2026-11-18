@@ -31,7 +31,7 @@ export function dbErrorMessage(err: unknown): string {
     "permission denied": "U heeft geen toestemming voor deze actie.",
     rejection_reason_required: "Geef een reden voor afwijzing op.",
     reason_required: "Een reden is verplicht.",
-    cancellation_requires_staff: "Annuleren is alleen mogelijk via The Secret Spot. Neem contact met ons op.",
+    cancellation_requires_staff: "Annuleren is alleen mogelijk via The Secret Girl. Neem contact met ons op.",
     "No exchange rate": "Er is geen wisselkoers ingesteld voor deze valuta. Voeg eerst een koers toe.",
     no_eligible_preorders: "Geen betaalde pre-orders zonder inkoopbatch voor deze leverancier.",
     "row-level security": "U heeft geen toestemming voor deze actie.",

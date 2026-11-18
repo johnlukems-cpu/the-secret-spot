@@ -52,7 +52,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ orde
   }
   if (o.payment_deadline) d.text(`Betaal de aanbetaling uiterlijk ${formatDate(o.payment_deadline, true)}.`, { size: 9 });
   d.spacer(6);
-  d.text(String(settings.payment_disclaimer ?? "Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Spot is geverifieerd."), { bold: true, size: 9 });
+  d.text(String(settings.payment_disclaimer ?? "Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Girl is geverifieerd."), { bold: true, size: 9 });
   if (settings.cancellation_policy) { d.spacer(6); d.text("Voorwaarden", { bold: true, size: 9 }); d.text(String(settings.cancellation_policy), { size: 8 }); }
   return pdfResponse(await d.bytes(), `${quotation?.quote_number ?? o.order_number}.pdf`);
 }

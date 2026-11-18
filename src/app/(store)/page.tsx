@@ -47,7 +47,7 @@ export default async function HomePage() {
   ]);
   const hero = content.find((b) => b.block_type === "hero");
   const banners = content.filter((b) => b.block_type === "promo_banner");
-  const wa = whatsappLink(settings.store_whatsapp as string, "Hallo The Secret Spot!");
+  const wa = whatsappLink(settings.store_whatsapp as string, "Hallo The Secret Girl!");
 
   const renderSection = (i: number) => {
     const s = sections[i];
@@ -65,7 +65,7 @@ export default async function HomePage() {
         )}
         <div className="container relative grid items-center gap-10 py-12 md:min-h-[78vh] md:grid-cols-2 md:py-16 [&>*]:min-w-0">
           <div className="order-2 md:order-1">
-            <p className="eyebrow mb-4 !text-gold">THE SECRET SPOT</p>
+            <p className="eyebrow mb-4 !text-gold">THE SECRET GIRL</p>
             <h1 className="max-w-3xl text-5xl leading-[1.05] md:text-6xl lg:text-7xl">{hero?.title ?? "YOUR STYLE. YOUR SECRET."}</h1>
             {hero?.subtitle && <p className="mt-5 max-w-xl text-base text-cream/80 md:text-lg">{hero.subtitle}</p>}
             <div className="mt-8 flex flex-wrap gap-3">

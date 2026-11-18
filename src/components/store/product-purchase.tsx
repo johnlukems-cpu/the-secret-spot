@@ -104,7 +104,7 @@ export function ProductPurchase({ product, price, depositPct }: { product: Produ
           </Button>
         </div>
       )}
-      <p className="text-xs text-taupe">Betaling via bankoverschrijving. Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Spot is geverifieerd. <Link href="/info/bestellen-en-betalen" className="underline">Meer info</Link></p>
+      <p className="text-xs text-taupe">Betaling via bankoverschrijving. Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Girl is geverifieerd. <Link href="/info/bestellen-en-betalen" className="underline">Meer info</Link></p>
     </div>
   );
 }

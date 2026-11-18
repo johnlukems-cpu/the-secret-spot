@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = await getProductBySlug(slug);
   if (!p) return {};
-  const description = p.seo_description ?? p.description?.slice(0, 155) ?? `${p.title} bij THE SECRET SPOT`;
+  const description = p.seo_description ?? p.description?.slice(0, 155) ?? `${p.title} bij THE SECRET GIRL`;
   return {
     title: p.seo_title ?? p.title,
     description,

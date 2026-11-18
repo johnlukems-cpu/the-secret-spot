@@ -1,4 +1,4 @@
-# THE SECRET SPOT — YOUR STYLE. YOUR SECRET.
+# THE SECRET GIRL — YOUR STYLE. YOUR SECRET.
 
 E-commerce and retail-management platform for an online family-fashion and import business in Suriname. It covers the storefront, checkout with bank-transfer deposits, manual payment verification, ready-stock inventory, pre-orders, purchasing from Chinese suppliers, shipment tracking, landed-cost allocation, nationwide delivery and financial reporting.
 

@@ -24,7 +24,7 @@ export default async function CheckoutPage() {
       zones={zones.map((z) => ({ id: z.id, name: z.name, estimated: z.estimated_days }))}
       prefill={prefill}
       policy={String(settings.cancellation_policy ?? "")}
-      disclaimer={String(settings.payment_disclaimer ?? "Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Spot is geverifieerd.")}
+      disclaimer={String(settings.payment_disclaimer ?? "Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Girl is geverifieerd.")}
       isLoggedIn={Boolean(session)}
     />
   );

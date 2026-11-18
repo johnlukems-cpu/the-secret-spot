@@ -95,9 +95,9 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
                   ))}
                 </div>
               ) : (
-                <Alert variant="warning" className="mt-4">De bankgegevens zijn nog niet ingesteld. Neem contact op met The Secret Spot voor de betaalinstructies.</Alert>
+                <Alert variant="warning" className="mt-4">De bankgegevens zijn nog niet ingesteld. Neem contact op met The Secret Girl voor de betaalinstructies.</Alert>
               )}
-              <p className="mt-4 text-sm font-medium">{String(settings.payment_disclaimer ?? "Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Spot is geverifieerd.")}</p>
+              <p className="mt-4 text-sm font-medium">{String(settings.payment_disclaimer ?? "Uw bestelling wordt pas bevestigd nadat uw betaling door The Secret Girl is geverifieerd.")}</p>
               {pendingPayments.length > 0 && <Alert className="mt-4">U heeft {pendingPayments.length} betaling(en) doorgegeven die nog gecontroleerd worden.</Alert>}
               <div className="mt-6 border-t pt-6">
                 <h3 className="mb-4 font-sans text-sm font-semibold uppercase tracking-wide">Betaling doorgeven</h3>
