@@ -63,20 +63,23 @@ export default async function HomePage() {
         {hero?.image_url && (
           <Image src={hero.image_url} alt="" fill priority sizes="100vw" className="object-cover opacity-60" />
         )}
-        <div className="container relative flex min-h-[70vh] flex-col justify-end py-16 md:min-h-[78vh] md:justify-center">
-          {!hero?.image_url && (
-            <svg aria-hidden viewBox="0 0 200 200" className="pointer-events-none absolute -right-20 top-1/2 h-[120%] -translate-y-1/2 opacity-[0.08] md:right-0">
-              <circle cx="100" cy="100" r="96" fill="none" stroke="#D8C49A" strokeWidth="1" />
-              <circle cx="100" cy="80" r="26" fill="#D8C49A" /><path d="M86 98h28l9 62H77z" fill="#D8C49A" />
-            </svg>
-          )}
-          <p className="eyebrow mb-4 !text-gold">THE SECRET SPOT</p>
-          <h1 className="max-w-3xl text-5xl leading-[1.05] md:text-7xl">{hero?.title ?? "YOUR STYLE. YOUR SECRET."}</h1>
-          {hero?.subtitle && <p className="mt-5 max-w-xl text-base text-cream/80 md:text-lg">{hero.subtitle}</p>}
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild variant="gold" size="lg"><Link href={hero?.link_url ?? "/collectie"}>{hero?.cta_label ?? "Shop de collectie"}</Link></Button>
-            <Button asChild variant="outline" size="lg" className="border-cream/40 text-cream hover:bg-cream/10"><Link href="/collectie?type=preorder">Pre-order</Link></Button>
+        <div className="container relative grid items-center gap-10 py-12 md:min-h-[78vh] md:grid-cols-2 md:py-16 [&>*]:min-w-0">
+          <div className="order-2 md:order-1">
+            <p className="eyebrow mb-4 !text-gold">THE SECRET SPOT</p>
+            <h1 className="max-w-3xl text-5xl leading-[1.05] md:text-6xl lg:text-7xl">{hero?.title ?? "YOUR STYLE. YOUR SECRET."}</h1>
+            {hero?.subtitle && <p className="mt-5 max-w-xl text-base text-cream/80 md:text-lg">{hero.subtitle}</p>}
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild variant="gold" size="lg"><Link href={hero?.link_url ?? "/collectie"}>{hero?.cta_label ?? "Shop de collectie"}</Link></Button>
+              <Button asChild variant="outline" size="lg" className="border-cream/40 text-cream hover:bg-cream/10"><Link href="/collectie?type=preorder">Pre-order</Link></Button>
+            </div>
           </div>
+          {!hero?.image_url && (
+            <div className="order-1 md:order-2">
+              <div className="relative mx-auto aspect-[3/2] w-full max-w-xl overflow-hidden rounded-lg bg-[#F8EDE4] shadow-2xl ring-1 ring-gold/30">
+                <Image src="/brand/the-secret-girl.webp" alt="The Secret Girl" fill priority sizes="(min-width:768px) 50vw, 100vw" className="object-contain" />
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
