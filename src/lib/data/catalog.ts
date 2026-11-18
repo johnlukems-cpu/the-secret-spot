@@ -41,7 +41,8 @@ function shape(rows: RawProduct[], stock: Map<string, number>): ProductCard[] {
 export const getPublicSettings = cache(async (): Promise<Record<string, unknown>> => {
   if (!isSupabaseConfigured()) return {};
   const supabase = await createClient();
-  const { data } = await supabase.from("business_settings").select("key, value").eq("is_public", true);
+  const { data, error } = await supabase.from("business_settings").select("key, value").eq("is_public", true);
+  if (error) console.error(`[catalog] settings query failed: ${error.message} (${error.code ?? "no code"})`);
   return Object.fromEntries((data ?? []).map((r: { key: string; value: unknown }) => [r.key, r.value]));
 });
 
@@ -104,7 +105,11 @@ export async function listProducts(q: ProductQuery): Promise<{ items: ProductCar
   }
   const from = (page - 1) * pageSize;
   const { data, count, error } = await query.range(from, from + pageSize - 1);
-  if (error) throw new Error(`Catalogue query failed: ${error.message}`);
+  if (error) {
+    // Log for Vercel → Logs, but keep the storefront usable (e.g. while the database is being set up).
+    console.error(`[catalog] product query failed: ${error.message} (${error.code ?? "no code"})`);
+    return { items: [], total: 0, page, pageSize };
+  }
   const rows = (data ?? []) as unknown as RawProduct[];
   const stock = await stockFor(rows.map((r) => r.id));
   return { items: shape(rows, stock), total: count ?? 0, page, pageSize };
